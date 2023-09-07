@@ -5,11 +5,11 @@ import sqlalchemy
 from typing import Literal
 
 
-# Define the SQLAlchemy engine for liteql (sqlite under the hood)
+# Define the SQLAlchemy engine for LiteQL (in-memory sqlite under the hood)
 LITEQL_ENGINE = sqlalchemy.create_engine('sqlite:///:memory:')
 
 
-class LiteQl:
+class LiteQL:
     name: str
     columns: pandas.DataFrame
 
@@ -27,7 +27,7 @@ def load(df: pandas.DataFrame,
          table_schema: dict | None = None,
          if_table_exists: Literal["fail", "replace", "append"] = "fail",
          include_index: bool | None = True,
-         chunk_size: int | None = 1000) -> LiteQl:
+         chunk_size: int | None = 1000) -> LiteQL:
     """
     Loads a pandas DataFrame to the SQLite in-memory session.
 
@@ -39,7 +39,7 @@ def load(df: pandas.DataFrame,
     :param chunk_size: The number of chunks to write into the table at one time.
     :return: The name of the loaded table.
     """
-    logging.debug('Entering liteql.load')
+    logging.debug('Entering LiteQL.load')
 
     df.to_sql(name=table_name,
               con=LITEQL_ENGINE,
@@ -48,11 +48,11 @@ def load(df: pandas.DataFrame,
               index=include_index,
               chunksize=chunk_size)
 
-    lite_table_cls = LiteQl(table_name=table_name)
+    litql_cls = LiteQL(table_name=table_name)
 
-    logging.debug('Exiting liteql.load')
+    logging.debug('Exiting LiteQL.load')
 
-    return lite_table_cls
+    return litql_cls
 
 
 def query(sql: str) -> pandas.DataFrame:
@@ -62,18 +62,18 @@ def query(sql: str) -> pandas.DataFrame:
     :param sql: An SQLite compatible SQL string.
     :return: A pandas DataFrame containing the queried data.
     """
-    logging.debug('Entering liteql.query')
+    logging.debug('Entering LiteQL.query')
 
     data = pandas.read_sql(sql=sql,
                            con=LITEQL_ENGINE)
 
-    logging.debug('Exiting liteql.query')
+    logging.debug('Exiting LiteQL.query')
 
     return data
 
 
 @pandas.api.extensions.register_dataframe_accessor("liteql")
-class LiteQlAccessor:
+class LiteQLAccessor:
     _df: pandas.DataFrame
 
     def __init__(self, pandas_obj: pandas.DataFrame):
