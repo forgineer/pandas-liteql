@@ -8,20 +8,20 @@ import unittest
 logging.basicConfig(level=logging.DEBUG)
 
 
-class TestLiteQLAccessor(unittest.TestCase):
-    def test_load1(self):
+class TestLiteQLLoad(unittest.TestCase):
+    def test_load_integer(self):
         pass
 
-    def test_load2(self):
+    def test_load_text(self):
         pass
 
-    def test_load3(self):
+    def test_load_blob(self):
         pass
 
-    def test_load4(self):
+    def test_load_real(self):
         pass
 
-    def test_load5(self):
+    def test_load_numeric(self):
         pass
 
 

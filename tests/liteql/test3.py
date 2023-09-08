@@ -18,6 +18,10 @@ people = pl.load(df=people_df, table_name='people', index=False)
 
 print(people.columns)
 
-people_df = pl.query(f"SELECT * FROM {people.name} where create_datetime < date('2020-03-28 00:00:00')")
+people_df = pl.query(f"""
+SELECT * FROM {people.name} 
+WHERE create_datetime < date('2020-03-28 00:00:00')
+ORDER BY create_datetime
+""")
 
 print(people_df)

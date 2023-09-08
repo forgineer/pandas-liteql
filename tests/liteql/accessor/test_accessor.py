@@ -9,19 +9,7 @@ logging.basicConfig(level=logging.DEBUG)
 
 
 class TestLiteQLAccessor(unittest.TestCase):
-    def test_accessor_select1(self):
-        pass
-
-    def test_accessor_select2(self):
-        pass
-
-    def test_accessor_select3(self):
-        pass
-
-    def test_accessor_select4(self):
-        pass
-
-    def test_accessor_select5(self):
+    def test_accessor(self):
         pass
 
 

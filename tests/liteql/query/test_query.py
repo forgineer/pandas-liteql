@@ -8,20 +8,20 @@ import unittest
 logging.basicConfig(level=logging.DEBUG)
 
 
-class TestLiteQLAccessor(unittest.TestCase):
-    def test_query1(self):
+class TestLiteQLQuery(unittest.TestCase):
+    def test_query_select(self):
         pass
 
-    def test_query2(self):
+    def test_query_join(self):
         pass
 
-    def test_query3(self):
+    def test_query_agg(self):
         pass
 
-    def test_query4(self):
+    def test_query_datetime(self):
         pass
 
-    def test_query5(self):
+    def test_query(self):
         pass
 
 

@@ -10,7 +10,7 @@ setup(
     long_description_content_type='text/markdown',
     url='https://github.com/forgineer/pandas-liteql',
     license='MIT License',
-    packages=['pandas_litesql'],
+    packages=['pandas_liteql'],
     install_requires=[
         'pandas >= 1.5.3',
         'sqlalchemy >= 1.4.16',
