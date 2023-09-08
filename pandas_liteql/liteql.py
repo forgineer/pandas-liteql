@@ -2,8 +2,6 @@ import logging
 import pandas
 import sqlalchemy
 
-from typing import Literal
-
 
 # Define the SQLAlchemy engine for LiteQL (in-memory sqlite under the hood)
 LITEQL_ENGINE = sqlalchemy.create_engine('sqlite:///:memory:')
@@ -22,31 +20,18 @@ class LiteQL:
         self.columns = pandas.DataFrame.from_dict(columns_table)
 
 
-def load(df: pandas.DataFrame,
-         table_name: str,
-         table_schema: dict | None = None,
-         if_table_exists: Literal["fail", "replace", "append"] = "fail",
-         include_index: bool | None = True,
-         chunk_size: int | None = 1000) -> LiteQL:
+def load(df: pandas.DataFrame, table_name: str, **pandas_args) -> LiteQL:
     """
     Loads a pandas DataFrame to the SQLite in-memory session.
 
     :param df: A pandas DataFrame.
     :param table_name: The name of the new table.
-    :param table_schema: A custom schema defined for the table.
-    :param if_table_exists: Behavior when table already exists.
-    :param include_index: Indicator to load the pandas index (True) or not (False)
-    :param chunk_size: The number of chunks to write into the table at one time.
+    :param **pandas_args: Additional pandas keyword arguments related to the pandas.to_sql method.
     :return: The name of the loaded table.
     """
     logging.debug('Entering LiteQL.load')
 
-    df.to_sql(name=table_name,
-              con=LITEQL_ENGINE,
-              schema=table_schema,
-              if_exists=if_table_exists,
-              index=include_index,
-              chunksize=chunk_size)
+    df.to_sql(name=table_name, con=LITEQL_ENGINE, **pandas_args)
 
     litql_cls = LiteQL(table_name=table_name)
 
@@ -55,7 +40,7 @@ def load(df: pandas.DataFrame,
     return litql_cls
 
 
-def query(sql: str) -> pandas.DataFrame:
+def query(sql: str, **pandas_args) -> pandas.DataFrame:
     """
     Queries the SQLite in-memory session.
 
@@ -64,8 +49,11 @@ def query(sql: str) -> pandas.DataFrame:
     """
     logging.debug('Entering LiteQL.query')
 
-    data = pandas.read_sql(sql=sql,
-                           con=LITEQL_ENGINE)
+    # Remove the engine 'con' (connection) if somehow included
+    if pandas_args.get('con', False):
+        pandas_args.pop('con')
+
+    data = pandas.read_sql(sql=sql, con=LITEQL_ENGINE, **pandas_args)
 
     logging.debug('Exiting LiteQL.query')
 
@@ -80,7 +68,7 @@ class LiteQLAccessor:
         self._df = pandas_obj
 
     def sql(self, accessor_sql: str) -> pandas.DataFrame:
-        load(df=self._df, table_name='liteql', if_table_exists='replace')
+        load(df=self._df, table_name='liteql', if_exists='replace')
 
         return query(accessor_sql)
 
