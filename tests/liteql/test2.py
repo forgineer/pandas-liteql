@@ -6,8 +6,8 @@ import pandas_liteql as pl
 
 logging.basicConfig(level=logging.DEBUG)
 
-people_df = pd.read_csv(filepath_or_buffer='../people.csv')
-cars_df = pd.read_csv(filepath_or_buffer='../cars.csv')
+people_df = pd.read_csv(filepath_or_buffer='people.csv')
+cars_df = pd.read_csv(filepath_or_buffer='cars.csv')
 
 people = pl.load(df=people_df, table_name='people')
 cars = pl.load(df=cars_df, table_name='cars')

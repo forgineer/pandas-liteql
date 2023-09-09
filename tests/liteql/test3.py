@@ -6,7 +6,7 @@ import pandas_liteql as pl
 
 logging.basicConfig(level=logging.DEBUG)
 
-people_df = pd.read_csv(filepath_or_buffer='../people.csv')
+people_df = pd.read_csv(filepath_or_buffer='people.csv')
 
 # 2021-03-23T09:26:48Z (date format)
 

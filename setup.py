@@ -1,16 +1,23 @@
 from setuptools import setup
 
 
+# Use README file as long description
+with open("README.md") as f:
+    long_description = f.read()
+
+
 setup(
     name='pandas-liteql',
     version='0.1.0',
     author='forgineer',
-    description='',
-    long_description='',
+    description="""An extension for pandas, enabling users to execute SQL statements directly on pandas DataFrames, 
+    streamlining data manipulation and analysis tasks""",
+    long_description=long_description,
     long_description_content_type='text/markdown',
     url='https://github.com/forgineer/pandas-liteql',
     license='MIT License',
     packages=['pandas_liteql'],
+    python_requires='>=3.7',
     install_requires=[
         'pandas >= 1.5.3',
         'sqlalchemy >= 1.4.16',

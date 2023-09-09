@@ -21,9 +21,6 @@ class TestLiteQLQuery(unittest.TestCase):
     def test_query_datetime(self):
         pass
 
-    def test_query(self):
-        pass
-
 
 if __name__ == '__main__':
     unittest.main()
