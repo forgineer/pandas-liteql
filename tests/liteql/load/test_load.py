@@ -23,7 +23,7 @@ class TestLiteQLLoad(unittest.TestCase):
         people = lql.load(df=people_df, table_name='people')
 
         logging.info(f'Table name: {people.name}')
-        print(people.schema)
+        #print(people.schema)
 
         self.assertIsInstance(people, lql.liteql.LiteQL)
         self.assertEqual(people.name, 'people')
@@ -45,7 +45,7 @@ class TestLiteQLLoad(unittest.TestCase):
                           index=False, dtype=schema, if_exists='replace')
 
         logging.info(f'Table name: {people.name}')
-        print(people.schema)
+        #print(people.schema)
 
         self.assertIsInstance(people, lql.liteql.LiteQL)
         self.assertEqual(people.name, 'people')

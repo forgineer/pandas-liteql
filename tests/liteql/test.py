@@ -21,7 +21,7 @@ address_df = pd.DataFrame({
 people = pl.load(df=people_df, table_name='people')
 address = pl.load(df=address_df, table_name='address')
 
-print(people.columns)
+print(people.schema)
 
 prepared_sql = f"""
 SELECT

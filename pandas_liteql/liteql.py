@@ -49,9 +49,9 @@ def query(sql: str, **pandas_args) -> pandas.DataFrame:
     """
     logging.debug('Entering LiteQL.query')
 
-    # Remove the engine 'con' (connection) if somehow included
-    if pandas_args.get('con', False):
-        pandas_args.pop('con')
+    # Remove the 'sql' or 'con' arguments if somehow included in 'pandas_args'
+    pandas_args.pop('sql', None)
+    pandas_args.pop('con', None)
 
     data = pandas.read_sql(sql=sql, con=LITEQL_ENGINE, **pandas_args)
 
