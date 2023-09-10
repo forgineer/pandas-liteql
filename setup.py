@@ -10,7 +10,7 @@ setup(
     name='pandas-liteql',
     version='0.1.0',
     author='forgineer',
-    description="""An extension for pandas, enabling users to execute SQL statements directly on pandas DataFrames, 
+    description="""An extension for pandas, enabling users to execute SQL statements on pandas DataFrames, 
     streamlining data manipulation and analysis tasks""",
     long_description=long_description,
     long_description_content_type='text/markdown',
@@ -19,8 +19,8 @@ setup(
     packages=['pandas_liteql'],
     python_requires='>=3.7',
     install_requires=[
-        'pandas >= 1.5.3',
-        'sqlalchemy >= 1.4.16',
+        'pandas >= 1.3.5',
+        'sqlalchemy >= 1.4.36',
     ],
     keywords='dataframe,pandas,sql,sqlite',
     classifiers=[
