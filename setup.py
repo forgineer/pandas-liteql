@@ -8,7 +8,7 @@ with open("README.md") as f:
 
 setup(
     name='pandas-liteql',
-    version='0.3.0',
+    version='0.3.6',
     author='forgineer',
     description="""An extension for pandas, enabling users to execute SQL statements on pandas DataFrames, 
     streamlining data manipulation and analysis tasks""",

@@ -1,7 +1,6 @@
+import pandas_liteql as lql
 import sqlalchemy
 import unittest
-
-from pandas_liteql import liteql as lql
 
 
 class TestLiteQLEngine(unittest.TestCase):

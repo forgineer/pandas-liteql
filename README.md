@@ -5,4 +5,4 @@
 ---
 
 # pandas-liteql
-A small (lite) pandas extension.
+**pandas-liteql** is an extension for pandas, enabling users to execute SQL statements on pandas DataFrames using in-memory SQLite, streamlining data manipulation and analysis tasks. Documentation comming soon...

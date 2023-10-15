@@ -21,10 +21,23 @@ class LiteQL:
 
         self.schema = pandas.DataFrame.from_dict(columns_table)
 
+    def log_schema(self):
+        schema_str = self.schema.to_string()
 
-def lite_logger(func: callable) -> Any:
+        for schema_line in schema_str.splitlines():
+            logging.debug(schema_line)
+
+
+def liteql_logger(func: callable) -> Any:
     def wrapper(*args, **kwargs) -> Any:
         logging.debug(f'Entering LiteQL.{func.__name__}')
+
+        for key, value in kwargs.items():
+            if isinstance(value, pandas.DataFrame):
+                # Avoid logging DataFrames that will likely junk things up
+                logging.debug(f'{func.__name__} : {key} : <pandas.DataFrame>')
+            else:
+                logging.debug(f'{func.__name__} : {key} : {value}')
 
         result = func(*args, **kwargs)
 
@@ -34,7 +47,7 @@ def lite_logger(func: callable) -> Any:
     return wrapper
 
 
-@lite_logger
+@liteql_logger
 def load(df: pandas.DataFrame, table_name: str, **pandas_args) -> LiteQL:
     """
     Loads a pandas DataFrame to the SQLite in-memory session.
@@ -51,24 +64,7 @@ def load(df: pandas.DataFrame, table_name: str, **pandas_args) -> LiteQL:
     return litql_cls
 
 
-@lite_logger
-def query(sql: str, **pandas_args) -> pandas.DataFrame:
-    """
-    Queries the SQLite in-memory session.
-
-    :param sql: An SQLite compatible SQL string.
-    :return: A pandas DataFrame containing the queried data.
-    """
-    # Remove the 'sql' or 'con' arguments if somehow included in 'pandas_args'
-    pandas_args.pop('sql', None)
-    pandas_args.pop('con', None)
-
-    data = pandas.read_sql(sql=sql, con=LITEQL_ENGINE, **pandas_args)
-
-    return data
-
-
-@lite_logger
+@liteql_logger
 def drop(table_name: str) -> None:
     """
     Drops the table from the SQLite in-memory session (if exists).
@@ -77,6 +73,27 @@ def drop(table_name: str) -> None:
     :return: None.
     """
     LITEQL_ENGINE.execute(f'DROP TABLE IF EXISTS {table_name}')
+
+
+@liteql_logger
+def query(sql: str, from_accessor: bool = False, **pandas_args) -> pandas.DataFrame:
+    """
+    Queries the SQLite in-memory session.
+
+    :param sql: An SQLite compatible SQL string.
+    :param from_accessor: Indicates if the query is coming from the LiteQL accessor extension.
+    :return: A pandas DataFrame containing the queried data.
+    """
+    # Remove the 'sql' or 'con' arguments if somehow included in 'pandas_args'
+    pandas_args.pop('sql', None)
+    pandas_args.pop('con', None)
+
+    data = pandas.read_sql(sql=sql, con=LITEQL_ENGINE, **pandas_args)
+
+    if from_accessor:
+        drop(table_name='liteql')
+
+    return data
 
 
 @pandas.api.extensions.register_dataframe_accessor("liteql")
@@ -93,9 +110,11 @@ class LiteQLAccessor:
         :param accessor_sql: An SQLite compatible SQL string.
         :return: A pandas DataFrame containing the queried data.
         """
-        load(df=self._df, table_name='liteql', if_exists='replace')
+        liteql_obj = load(df=self._df, table_name='liteql', if_exists='replace')
 
-        return query(accessor_sql)
+        liteql_obj.log_schema()
+
+        return query(accessor_sql, from_accessor=True)
 
 
 if __name__ == '__main__':

@@ -1,5 +1,7 @@
 import logging
 import pandas as pd
+import sqlalchemy.exc
+
 import pandas_liteql as lql
 import unittest
 
@@ -22,7 +24,13 @@ class TestLiteQLAccessor(unittest.TestCase):
         people_under_18 = people.liteql.sql('SELECT id, first_name, age FROM liteql WHERE age < 18')
         #print(people_under_18)
 
+        # Assert that the DataFrame was created from the sql accessory
         self.assertIsInstance(people_under_18, pd.DataFrame)
+
+        # Assert that the liteql table was successfully removed
+        # by asserting on SQLAlchemy OperationalError (table not found)
+        with self.assertRaises(sqlalchemy.exc.OperationalError):
+            liteql_df = lql.query('SELECT * FROM liteql')
 
 
 if __name__ == '__main__':
