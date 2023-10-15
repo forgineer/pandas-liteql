@@ -8,7 +8,7 @@ with open("README.md") as f:
 
 setup(
     name='pandas-liteql',
-    version='0.1.0',
+    version='0.3.0',
     author='forgineer',
     description="""An extension for pandas, enabling users to execute SQL statements on pandas DataFrames, 
     streamlining data manipulation and analysis tasks""",
@@ -22,6 +22,12 @@ setup(
         'pandas >= 1.3.5',
         'sqlalchemy >= 1.4.36',
     ],
+    extras_require={  # pip install -e .[dev]
+        'dev': [
+            'build',
+            'twine'
+        ]
+    },
     keywords='dataframe,pandas,sql,sqlite',
     classifiers=[
         'Development Status :: 3 - Alpha',
@@ -37,3 +43,11 @@ setup(
         'Programming Language :: Python :: 3.11',
     ]
 )
+
+"""
+Build and deploy steps:
+    - python -m build
+    - twine check dist/*
+    - twine upload -r testpypi dist/*
+    - twine upload dist/*
+"""
