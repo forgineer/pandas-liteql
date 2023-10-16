@@ -56,12 +56,12 @@ class TestLiteQLQuery(unittest.TestCase):
         cars = lql.load(df=cars_df, table_name='cars', index=False, if_exists='replace')
 
         prepared_sql = f"""
-        SELECT
-            p.id
-            , p.first_name
-            , c.make
-            , c.model
-            , c.year
+            SELECT
+                p.id
+                , p.first_name
+                , c.make
+                , c.model
+                , c.year
             FROM {people.name} p
             INNER JOIN {cars.name} c
                 ON p.id = c.people_id
@@ -89,7 +89,7 @@ class TestLiteQLQuery(unittest.TestCase):
             SELECT * FROM {people.name} 
             WHERE create_datetime < datetime('2021-01-01 00:00:00')
             ORDER BY create_datetime
-            """)
+        """)
         #print(people_created_before_2021)
 
         self.assertIsInstance(people_created_before_2021, pd.DataFrame)

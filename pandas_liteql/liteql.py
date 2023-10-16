@@ -76,12 +76,11 @@ def drop(table_name: str) -> None:
 
 
 @liteql_logger
-def query(sql: str, from_accessor: bool = False, **pandas_args) -> pandas.DataFrame:
+def query(sql: str, *drop_tables, **pandas_args) -> pandas.DataFrame:
     """
     Queries the SQLite in-memory session.
 
     :param sql: An SQLite compatible SQL string.
-    :param from_accessor: Indicates if the query is coming from the LiteQL accessor extension.
     :return: A pandas DataFrame containing the queried data.
     """
     # Remove the 'sql' or 'con' arguments if somehow included in 'pandas_args'
@@ -90,8 +89,8 @@ def query(sql: str, from_accessor: bool = False, **pandas_args) -> pandas.DataFr
 
     data = pandas.read_sql(sql=sql, con=LITEQL_ENGINE, **pandas_args)
 
-    if from_accessor:
-        drop(table_name='liteql')
+    for table in drop_tables:
+        drop(table_name=table)
 
     return data
 
@@ -114,7 +113,7 @@ class LiteQLAccessor:
 
         liteql_obj.log_schema()
 
-        return query(accessor_sql, from_accessor=True)
+        return query(accessor_sql, 'liteql')
 
 
 if __name__ == '__main__':

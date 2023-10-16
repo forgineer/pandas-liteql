@@ -8,10 +8,10 @@ with open("README.md") as f:
 
 setup(
     name='pandas-liteql',
-    version='0.3.6',
+    version='0.5.1',
     author='forgineer',
-    description="""An extension for pandas, enabling users to execute SQL statements on pandas DataFrames, 
-    streamlining data manipulation and analysis tasks""",
+    description="""A simple pandas extension that enables users to execute SQL statements against DataFrames using 
+    in-memory SQLite.""",
     long_description=long_description,
     long_description_content_type='text/markdown',
     url='https://github.com/forgineer/pandas-liteql',
@@ -22,15 +22,16 @@ setup(
         'pandas >= 1.3.5',
         'sqlalchemy >= 1.4.36',
     ],
-    extras_require={  # pip install -e .[dev]
-        'dev': [
+    extras_require={  # pip install -e .[pypi_deployment]
+        'pypi_deployment': [
             'build',
             'twine'
         ]
     },
     keywords='dataframe,pandas,sql,sqlite',
+    # https://pypi.org/classifiers/
     classifiers=[
-        'Development Status :: 3 - Alpha',
+        'Development Status :: 4 - Beta',
         'License :: OSI Approved :: MIT License',
         'Operating System :: OS Independent',
         'Intended Audience :: Developers',
@@ -41,6 +42,7 @@ setup(
         'Programming Language :: Python :: 3.9',
         'Programming Language :: Python :: 3.10',
         'Programming Language :: Python :: 3.11',
+        'Programming Language :: Python :: 3.12',
     ]
 )
 
