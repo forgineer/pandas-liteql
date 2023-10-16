@@ -8,7 +8,7 @@
 **pandas-liteql** is a simple [pandas](https://pandas.pydata.org/) extension that enables users to execute SQL statements against DataFrames using in-memory [SQLite](https://www.sqlite.org/index.html). It is meant to streamline data manipulation and analysis tasks. For more detailed information and examples on **pandas-liteql**, visit the [documentation pages](https://forgineer.pythonanywhere.com/pandas-liteql).
 
 # What pandas-liteql is not
-**pandas-liteql** is not a competitor to libraries such as [PySpark](https://spark.apache.org/docs/latest/api/python/index.html) or [DuckDB](https://duckdb.org/) that can perform SQL queries on larger data sets and perform additional ML use-cases. Rather, it is inspired by those projects and similar libraries that have performed the same function, but have since been abandoned or were not as user-friendly.
+**pandas-liteql** is not a competitor to libraries such as [PySpark](https://spark.apache.org/docs/latest/api/python/index.html) or [DuckDB](https://duckdb.org/) that can perform SQL queries on larger data sets and perform more advanced data science use-cases. Rather, it is inspired by those projects and similar libraries that have performed the same function, but have since been abandoned or were not as user-friendly.
 
 # Installing pandas-liteql
 **pandas-liteql** requires a minimum of Python 3.7 and the following libraries:
