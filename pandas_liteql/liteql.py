@@ -19,7 +19,7 @@ class LiteQL:
         liteql_inspect = sqlalchemy.inspect(LITEQL_ENGINE)
         columns_table = liteql_inspect.get_columns(table_name)
 
-        self.schema = pandas.DataFrame.from_dict(columns_table)
+        self.schema = pandas.DataFrame(columns_table)
 
     def log_schema(self):
         schema_str = self.schema.to_string()
@@ -72,7 +72,11 @@ def drop(table_name: str) -> None:
     :param table_name: The name of the loaded SQLite table.
     :return: None.
     """
-    LITEQL_ENGINE.execute(f'DROP TABLE IF EXISTS {table_name}')
+    if int(sqlalchemy.__version__[:1]) < 2:
+        LITEQL_ENGINE.execute(f'DROP TABLE IF EXISTS {table_name}')
+    else:
+        with LITEQL_ENGINE.connect() as connection:
+            connection.execute(sqlalchemy.text(f'DROP TABLE IF EXISTS {table_name}'))
 
 
 @liteql_logger
@@ -81,6 +85,8 @@ def query(sql: str, *drop_tables, **pandas_args) -> pandas.DataFrame:
     Queries the SQLite in-memory session.
 
     :param sql: An SQLite compatible SQL string.
+    :param *drop_tables: A list of tables (as args) to be dropped after the query has completed.
+    :param **pandas_args: Additional pandas keyword arguments related to the pandas.to_sql method.
     :return: A pandas DataFrame containing the queried data.
     """
     # Remove the 'sql' or 'con' arguments if somehow included in 'pandas_args'

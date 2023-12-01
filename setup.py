@@ -8,7 +8,7 @@ with open("README.md") as f:
 
 setup(
     name='pandas-liteql',
-    version='0.5.1',
+    version='0.5.2',
     author='forgineer',
     description="""A simple pandas extension that enables users to execute SQL statements against DataFrames using 
     in-memory SQLite.""",
@@ -23,7 +23,10 @@ setup(
         'sqlalchemy >= 1.4.36',
     ],
     extras_require={  # pip install -e .[pypi_deployment]
-        'pypi_deployment': [
+        'docs': [
+            'mkdocs'
+        ],
+        'deployment': [
             'build',
             'twine'
         ]
