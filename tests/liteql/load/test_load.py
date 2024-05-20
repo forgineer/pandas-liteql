@@ -27,7 +27,7 @@ class TestLiteQLLoad(unittest.TestCase):
 
         people.log_schema()
 
-        self.assertIsInstance(people, lql.liteql.LiteQL)
+        self.assertIsInstance(people, lql.LiteQL)
         self.assertEqual(people.name, 'people')
         self.assertIsInstance(people.schema, pd.DataFrame)
 
@@ -51,7 +51,7 @@ class TestLiteQLLoad(unittest.TestCase):
 
         people.log_schema()
 
-        self.assertIsInstance(people, lql.liteql.LiteQL)
+        self.assertIsInstance(people, lql.LiteQL)
         self.assertEqual(people.name, 'people')
         self.assertIsInstance(people.schema, pd.DataFrame)
 

@@ -1,5 +1,5 @@
 <div align="center">
-    <img src="https://forgineer.pythonanywhere.com/static/pandas_liteql/pandas-liteql-logo.png" alt="pandas-liteql-logo.png"><br>
+    <img src="https://forgineer.pythonanywhere.com/static/pandas_liteql/pandas-liteql-feather-logo-large.png" alt="pandas-liteql-logo.png"><br>
 </div>
 
 ---
@@ -25,14 +25,14 @@ pip install pandas-liteql
 ```
 
 # Examples
-Below are some usage examples to load, query, and drop data from the in-memory SQLite sessions established with **pandas-liteql** and pandas DataFrame integration. For more in-depth information and examples visit the [documentation pages](https://forgineer.pythonanywhere.com/pandas-liteql).
+Below are some usage examples to load, query, and drop data from the in-memory SQLite sessions established with **pandas-liteql** and pandas DataFrame integration.
 
 ## Loading
 Start by loading your DataFrame with the `load` function. When **pandas-liteql** is imported, an in-memory SQLite session is created where data can be loaded to.
 
 ```python
 import pandas as pd
-import pandas_liteql as lql
+from src import pandas_liteql as lql
 
 # Data set creation
 person_data = {
@@ -120,4 +120,4 @@ Output:
 
 
 # Contributing
-Contributions are welcome via pull request from a fork. Log issues if any bugs are found or if you have some good ideas of how this project could be expanded on. Depending on interest, other contributors could be added to meet the demand in features.
+Currently, **pandas-liteql** will not be receiving any additional updates. Contributions will not be accepted here, but feel free to fork this project if you desire.
